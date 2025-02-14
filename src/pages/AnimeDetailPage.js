@@ -1,0 +1,58 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchAnimeById } from '../services/animeApi';
+import '../assets/AnimeDetailPage.css';
+function AnimeDetailPage() {
+  const { id } = useParams();
+  const [anime, setAnime] = useState(null);
+
+  useEffect(() => {
+    fetchAnimeById(id).then(data => setAnime(data));
+  }, [id]);
+
+  if (!anime) {
+    return <div>Загрузка...</div>;
+  }
+
+  // Функция для получения id видео из ссылки YouTube
+  const getYouTubeVideoId = (url) => {
+    const regExp = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/.*v=([a-zA-Z0-9_-]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  const videoId = getYouTubeVideoId(anime.youtube_url);
+
+  return (
+    <div className="anime-detail-page">
+      <h2>{anime.title}</h2>
+      <div className="anime-detail-content">
+        <div className="anime-detail-image">
+          <img src={anime.imageUrl} alt={anime.title} />
+        </div>
+        <div className="anime-detail-info">
+          <p><strong>Описание:</strong> {anime.description}</p>
+          <p><strong>Год выпуска:</strong> {anime.year}</p>
+          <p><strong>Жанр:</strong> {anime.genre}</p>
+          <a href={anime.url} target="_blank" rel="noopener noreferrer">Смотреть</a>
+
+          {videoId && (
+            <div className="anime-video">
+              <iframe 
+                width="560" 
+                height="315" 
+                src={`https://www.youtube.com/embed/${videoId}`} 
+                title="YouTube video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AnimeDetailPage;
