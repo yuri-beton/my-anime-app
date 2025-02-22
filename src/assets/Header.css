@@ -1,55 +1,56 @@
-/* Общие стили для хедера */
 .header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo-link {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .nav {
-    font-size: 16px;
-  }
-  
+  background-color: #a3b18a; /* Приглушённый оливковый */
+  color: #344e41; /* Тёмно-зелёный */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Логотип */
+.logo-link {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fefae0; 
+  text-decoration: none;
+}
+
+
+.nav {
+  font-size: 16px;
+}
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav li {
+  margin-left: 20px;
+}
+
+.nav-link {
+  color: #fefae0; 
+  text-decoration: none;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #3a5a40; 
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
   .nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
   .nav li {
-    margin-left: 20px;
+    margin: 10px 0;
   }
-  
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-    padding: 5px;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #007bff;
-  }
-  
-  /* Адаптивность */
-  @media (max-width: 768px) {
-    .nav ul {
-      flex-direction: column;
-      align-items: center;
-    }
-    .nav li {
-      margin: 10px 0;
-    }
-  }
-  
+}

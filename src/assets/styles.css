@@ -9,7 +9,7 @@
   
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #e5fce282;
   }
   
   h1, h2 {
@@ -25,7 +25,7 @@ body {
   }
   
   .anime-card {
-    background-color: #fff;
+    background-color: #e2f5c1; 
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -53,7 +53,7 @@ body {
     display: inline-block;
     margin-top: auto; /* Отталкивает ссылку вниз */
     text-align: center; /* Центрирует текст */
-    color: #007bff; /* Цвет ссылки */
+    color: #00590c; /* Цвет ссылки */
     text-decoration: none; /* Убираем подчеркивание */
     font-weight: bold; /* Сделаем ссылку жирной */
   }

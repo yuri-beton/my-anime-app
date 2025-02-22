@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchAnimeById } from '../services/animeApi';
-import '../assets/AnimeDetailPage.css';
+import "../assets/AnimeDetailPage.css";
 function AnimeDetailPage() {
   const { id } = useParams();
   const [anime, setAnime] = useState(null);

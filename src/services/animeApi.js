@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/home';
+const API_URL = 'http://localhost:8080/api/anime/all';
+
 
 export const fetchAnimeList = async () => {
   try {
@@ -13,7 +14,7 @@ export const fetchAnimeList = async () => {
 };
 
 export const fetchAnimeById = async (id) => {
-  const response = await fetch(`http://localhost:8080/anime/${id}`);  // Замените на ваш реальный API
+  const response = await fetch(`http://localhost:8080/api/anime/${id}`);  // Замените на ваш реальный API
   const data = await response.json();
   return data;
 };

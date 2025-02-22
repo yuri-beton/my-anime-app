@@ -54,7 +54,7 @@
     display: inline-block;
     margin-top: 15px;
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color:#588157;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -62,6 +62,6 @@
   }
   
   .anime-detail-info a:hover {
-    background-color: #0056b3;
+    background-color: #3a5a40; 
   }
   

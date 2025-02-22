@@ -1,0 +1,52 @@
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #e9f5db; /* Светлый оливковый */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Стили формы */
+.auth-form input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #a3b18a; /* Оливковый */
+  border-radius: 5px;
+  background: #fefae0; /* Мягкий бежевый */
+  color: #344e41; /* Глубокий зелёный */
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #588157; /* Тёмно-оливковый */
+}
+
+/* Кнопка */
+.auth-form button {
+  width: 50%;
+  padding: 10px;
+  background: #588157; /* Основной зелёный */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.auth-form button:hover {
+  background: #3a5a40; /* Тёмно-зелёный */
+}
+
+/* Сообщения */
+.success-message {
+  color: #2d6a4f; /* Приглушённый зелёный */
+  font-size: 14px;
+}
+
+.error-message {
+  color: #d00000; /* Красный для ошибок */
+  font-size: 14px;
+}
