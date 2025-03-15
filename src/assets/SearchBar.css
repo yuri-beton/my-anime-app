@@ -1,0 +1,49 @@
+.genre-filter {
+    width: 250px;
+    background-color: #dad7cd; /* Светло-оливковый */
+    color: #344e41; /* Тёмно-зелёный */
+    padding: 15px;
+    border-radius: 10px;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    border: 1px solid #a3b18a; /* Приглушённый оливковый */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.genre-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.genre-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #344e41; /* Тёмно-зелёный */
+}
+
+.genre-item input {
+    accent-color: #3a5a40; /* Насыщенный зелёный */
+}
+
+.genre-button {
+    background: #a3b18a; /* Приглушённый оливковый */
+    border: 1px solid #344e41;
+    color: #fefae0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.genre-button:hover {
+    background: #3a5a40; /* Насыщенный зелёный */
+}
+
+.genre-button.selected {
+    background: #344e41; /* Тёмно-зелёный */
+    color: #fefae0;
+}

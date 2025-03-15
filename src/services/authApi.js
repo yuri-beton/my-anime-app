@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { getToken } from "./authService";
+
 
 const API_URL = 'http://localhost:8081/api/auth/';
 
@@ -25,23 +27,17 @@ export const loginUser = async (username, password) => {
 };
 
 // Проверка статуса пользователя (активирован или нет)
-export const checkAuthStatus = async (token) => {
+export const fetchUserData = async () => {
+  const token = getToken();
+  if (!token) return null;
+
   try {
-    const response = await axios.get(`${API_URL}status`, {
+    const response = await axios.get(`${API_URL}user`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
-    console.error('Ошибка при проверке статуса:', error);
+    console.error('Ошибка при получении данных пользователя:', error);
     return null;
-  }
-};
-
-// Выход из системы (очистка токена)
-export const logoutUser = async (token) => {
-  try {
-    await axios.post(`${API_URL}logout`, { token });
-  } catch (error) {
-    console.error('Ошибка при выходе:', error);
   }
 };

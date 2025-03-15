@@ -18,11 +18,12 @@ body {
   /* В файле styles.css */
 /* Контейнер для всех карточек */
 .anime-grid {
-    display: grid; /* Включаем grid layout */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Задаем колонки с минимальной шириной 200px */
-    gap: 20px; /* Отступы между карточками */
-    padding: 20px; /* Отступы от краев */
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Больше карточек в ряд */
+  gap: 20px;
+  width: 100%;
+  justify-content: center; /* Центрируем */
+}
   
   .anime-card {
     background-color: #e2f5c1; 
