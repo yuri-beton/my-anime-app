@@ -18,11 +18,14 @@ body {
   /* В файле styles.css */
 /* Контейнер для всех карточек */
 .anime-grid {
+  flex: 1; /* Заставляем сетку занимать всё свободное место */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Больше карточек в ряд */
+  align-items: flex-start;
+  gap: 20px; /* Добавляем промежуток между фильтром и карточками */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
-  width: 100%;
-  justify-content: center; /* Центрируем */
+  max-width: calc(100% - 250px); /* Учитываем ширину бокового фильтра */
+  margin-left: 220px; /* Отодвигаем от фильтра жанров */
 }
   
   .anime-card {

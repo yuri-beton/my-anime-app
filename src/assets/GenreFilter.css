@@ -1,34 +1,48 @@
-
 .genre-filter {
-width: 250px; /* Узкий блок справа */
-background: #dad7cd; /* Цвет фона, как у фильтров */
-padding: 15px;
-border-radius: 5px;
-border: 1px solid #a3b18a;
-}
+    width: 250px; 
+    background: #dad7cd; 
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #a3b18a;
+    position: fixed; /* Фиксируем фильтр */
+    left: 20px; /* Отодвигаем влево */
+    top: 100px; /* Смещаем ниже */
+    height: auto;
+  }
+/* Заголовок */
 .genre-filter h3 {
-    font-size: 18px;
-    color: #344e41; /* Темно-зеленый заголовок */
+    font-size: 1.2rem;
+    color: #344e41;
     margin-bottom: 10px;
+    text-align: center; /* Центрируем заголовок */
 }
 
- .genre-list {
-display: flex;
-flex-direction: column;
-gap: 5px;
+/* Список жанров */
+.genre-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-
+/* Отдельный пункт */
 .genre-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 14px;
-    color: #344e41; /* Тёмно-зелёный */
+    color: #344e41;
+    transition: color 0.3s ease;
 }
 
+/* Изменение цвета при наведении */
+.genre-item:hover {
+    color: #3a5a40;
+}
+
+/* Стилизация чекбоксов */
 .genre-item input {
-    accent-color: #3a5a40; /* Насыщенный зелёный */
+    accent-color: #3a5a40; /* Зелёный цвет */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
-
-

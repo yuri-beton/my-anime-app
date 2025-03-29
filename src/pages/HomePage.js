@@ -3,6 +3,7 @@ import { fetchAnimeList } from '../services/animeApi';
 import AnimeCard from '../components/AnimeCard';
 import axios from 'axios';
 import '../assets/GenreFilter.css';
+import '../assets/anime-grid.css';
 import GenreFilter from '../components/GenreFilter';
 
 

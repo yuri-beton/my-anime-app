@@ -33,7 +33,8 @@ function AnimeDetailPage() {
         <div className="anime-detail-info">
           <p><strong>Описание:</strong> {anime.description}</p>
           <p><strong>Год выпуска:</strong> {anime.year}</p>
-          <p><strong>Жанр:</strong> {anime.genre}</p>
+          <p><strong>Жанры:</strong> {anime.genres ? anime.genres.join(", ") : "Не указаны"}</p>
+
           <a href={anime.url} target="_blank" rel="noopener noreferrer">Смотреть</a>
 
           {videoId && (

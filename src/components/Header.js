@@ -2,7 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeToken } from "../services/authService"; // Удаляем useAuth
 import "../assets/Header.css";
+import "../assets/GoogleTranslate.css";
 import SearchBar from "./SearchBar";
+import GoogleTranslate from "./GoogleTranslate";
 
 function Header({ isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -36,6 +38,10 @@ function Header({ isAuthenticated, setIsAuthenticated }) {
           )}
         </ul>
       </nav>
+
+    {/* переводчиком */}
+        <GoogleTranslate />
+
     </header>
   );
 }
