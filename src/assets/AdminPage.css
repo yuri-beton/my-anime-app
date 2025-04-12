@@ -1,0 +1,72 @@
+.admin-page {
+    padding: 30px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #344e41;
+  }
+  
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-form input,
+  .admin-form textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .admin-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .admin-buttons button {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-button {
+    background-color: #588157;
+  }
+  
+  .add-button:hover {
+    background-color: #3a5a40;
+  }
+  
+  .update-button {
+    background-color: #6c757d;
+  }
+  
+  .update-button:hover {
+    background-color: #495057;
+  }
+  
+  .delete-button {
+    background-color: #bc4749;
+  }
+  
+  .delete-button:hover {
+    background-color: #9b2226;
+  }
+  

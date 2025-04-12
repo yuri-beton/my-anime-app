@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { fetchAnimeList } from '../services/animeApi';
 import AnimeCard from '../components/AnimeCard';
 import axios from 'axios';
@@ -6,16 +7,14 @@ import '../assets/GenreFilter.css';
 import '../assets/anime-grid.css';
 import GenreFilter from '../components/GenreFilter';
 
-
 const genreList = [
-  'Экшен', 'Приключения', 'Комедия', 'Драма', 'Фэнтези', 'Повседневность', 'Ужасы', 'Мистика', 'Психологическое', 
-  'Романтика', 'Научная фантастика', 'Сверхъестественное', 'Триллер', 'Спорт', 'Меха', 'Исекай', 'Исторический', 
-  'Военное', 'Музыка', 'Сёнен', 'Сёдзё', 'Сейнен', 'Дзёсэй', 'Гарем', 'Обратный гарем', 'Этти', 'Яой', 'Юри', 
-  'Пародия', 'Суперспособности', 'Демоны', 'Вампиры', 'Магия', 'Боевые искусства', 'Школа', 'Игры', 'Полиция', 
-  'Самураи', 'Космос', 'Постапокалипсис', 'Киберпанк', 'Стимпанк', 'Деменция'
+  'action', 'adventure', 'comedy', 'drama', 'fantasy', 'sliceOfLife',
+  'horror', 'mystery', 'psychological', 'romance', 'sciFi',
+  'supernatural', 'thriller', 'sports', 'mecha', 'isekai', 'historical'
 ];
 
 function HomePage() {
+  const { t } = useTranslation();
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnime, setFilteredAnime] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -31,38 +30,40 @@ function HomePage() {
       setFilteredAnime([]);
       return;
     }
-  
+
     const fetchFilteredAnime = async () => {
       try {
         const genreParams = selectedGenres.map(g => `genres=${encodeURIComponent(g)}`).join("&");
-        const response = await axios.get(`http://localhost:8080/api/anime/filter?${genreParams}`);
+        const response = await axios.get(`https://n8n.sagutor.ru/webhook/anime/filter?${genreParams}`);
         setFilteredAnime(response.data);
       } catch (error) {
-        console.error("Ошибка фильтрации:", error);
+        console.error(t('filterError'), error);
       }
     };
-  
+
     fetchFilteredAnime();
-  }, [selectedGenres]);
+  }, [selectedGenres, t]);
 
   return (
+    <div className="home-container">
     <div className="home-page">
-      <h2>Список аниме</h2>
-      <div className="content-wrapper">
+      <h2>{t('animeList')}</h2>
+      <div className="anime-page-container">
         <GenreFilter 
-          genreList={genreList} 
-          selectedGenres={selectedGenres} 
-          setSelectedGenres={setSelectedGenres} 
-          releaseYear={releaseYear} 
-          setReleaseYear={setReleaseYear} 
-          rating={rating} 
-          setRating={setRating} 
+          genreList={genreList}
+          selectedGenres={selectedGenres}
+          setSelectedGenres={setSelectedGenres}
+          releaseYear={releaseYear}
+          setReleaseYear={setReleaseYear}
+          rating={rating}
+          setRating={setRating}
         />
         <div className="anime-grid">
           {(filteredAnime.length > 0 ? filteredAnime : animeList).map(anime => (
             <AnimeCard key={anime.id} anime={anime} />
           ))}
         </div>
+      </div>
       </div>
     </div>
   );

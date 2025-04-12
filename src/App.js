@@ -10,6 +10,9 @@ import { getToken } from "./services/authService";
 import "./assets/App.css"; 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { I18nextProvider } from "react-i18next";  // Импортируем I18nextProvider
+import i18n from "./i18n";  // Импортируем файл инициализации i18n
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!getToken());
@@ -19,22 +22,25 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="app-container">
-        <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/anime/:id" element={<AnimeDetailPage />} />
-            <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </main>
-        <Footer />
-        {/* Добавляем контейнер для уведомлений */}
-        <ToastContainer position="top-right" autoClose={2000} />
-      </div>
-    </Router>
+    <I18nextProvider i18n={i18n}>  {/* Оборачиваем приложение в I18nextProvider */}
+      <Router>
+        <div className="app-container">
+          <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/anime/:id" element={<AnimeDetailPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+          </main>
+          <Footer />
+          {/* Добавляем контейнер для уведомлений */}
+          <ToastContainer position="top-right" autoClose={2000} />
+        </div>
+      </Router>
+    </I18nextProvider>
   );
 }
 

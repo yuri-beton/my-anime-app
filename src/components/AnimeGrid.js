@@ -5,7 +5,7 @@ function AnimeGrid({ animeList }) {
   return (
     <div className="anime-grid">
       {animeList.map(anime => (
-        <AnimeCard key={anime.id} anime={anime} />
+        <AnimeCard key={anime.:id} anime={anime} />
       ))}
     </div>
   );

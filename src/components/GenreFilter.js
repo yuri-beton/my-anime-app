@@ -1,52 +1,88 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import "../assets/GenreFilter.css";
 
 const GenreFilter = ({ selectedGenres, setSelectedGenres }) => {
-    const [genres, setGenres] = useState([]);
+  const { t } = useTranslation();
+  const [genres, setGenres] = useState([]);
 
-    // Локальный список жанров (на случай ошибки API)
-    const localGenreList = [
-        "Экшен", "Приключения", "Комедия", "Драма", "Фэнтези", "Повседневность",
-        "Ужасы", "Мистика", "Психологическое", "Романтика", "Научная фантастика",
-        "Сверхъестественное", "Триллер", "Спорт", "Меха", "Исекай", "Исторический"
-    ];
+  // Локальный список жанров
+  const localGenreList = [
+    "action", "adventure", "comedy", "drama", "fantasy", "sliceOfLife",
+    "horror", "mystery", "psychological", "romance", "sciFi",
+    "supernatural", "thriller", "sports", "mecha", "isekai", "historical"
+  ];
 
-    useEffect(() => {
-        axios
-            .get("http://localhost:8080/api/anime/genres")
-            .then((response) => setGenres(response.data))
-            .catch((error) => {
-                console.error("Ошибка загрузки жанров:", error);
-                setGenres(localGenreList); // Используем локальный список
-            });
-    }, []);
+  useEffect(() => {
+    axios
+      .get("https://n8n.sagutor.ru/webhook/anime/filter")
+      .then((response) => {
+        console.log("FULL API RESPONSE:", response);
+        const data = response.data;
+        if (Array.isArray(data)) {
+          // Преобразуем серверные жанры к ключам, если понадобится
+          setGenres(data.map(genre => mapGenreToKey(genre)));
+        } else {
+          console.warn("API не вернул массив, используем локальный список.");
+          setGenres(localGenreList);
+        }
+      })
+      .catch((error) => {
+        console.error(t('genresLoadError'), error);
+        setGenres(localGenreList);
+      });
+  }, []);
 
-    const toggleGenre = (genre) => {
-        setSelectedGenres((prevGenres) =>
-            prevGenres.includes(genre)
-                ? prevGenres.filter((g) => g !== genre)
-                : [...prevGenres, genre]
-        );
+  const mapGenreToKey = (genreName) => {
+    // Функция для маппинга жанров если API присылает русские названия
+    const mapping = {
+      "Экшен": "action",
+      "Приключения": "adventure",
+      "Комедия": "comedy",
+      "Драма": "drama",
+      "Фэнтези": "fantasy",
+      "Повседневность": "sliceOfLife",
+      "Ужасы": "horror",
+      "Мистика": "mystery",
+      "Психологическое": "psychological",
+      "Романтика": "romance",
+      "Научная фантастика": "sciFi",
+      "Сверхъестественное": "supernatural",
+      "Триллер": "thriller",
+      "Спорт": "sports",
+      "Меха": "mecha",
+      "Исекай": "isekai",
+      "Исторический": "historical"
     };
+    return mapping[genreName] || genreName;
+  };
 
-    return (
-        <div className="genre-filter">
-            <h3>Жанры</h3>
-            <div className="genre-list">
-                {genres.map((genre) => (
-                    <label key={genre} className="genre-item">
-                        <input
-                            type="checkbox"
-                            checked={selectedGenres.includes(genre)}
-                            onChange={() => toggleGenre(genre)}
-                        />
-                        {genre}
-                    </label>
-                ))}
-            </div>
-        </div>
+  const toggleGenre = (genre) => {
+    setSelectedGenres((prevGenres) =>
+      prevGenres.includes(genre)
+        ? prevGenres.filter((g) => g !== genre)
+        : [...prevGenres, genre]
     );
+  };
+
+  return (
+    <div className="genre-filter">
+      <h3>{t('genres')}</h3>
+      <div className="genre-list">
+        {genres.map((genre) => (
+          <label key={genre} className="genre-item">
+            <input
+              type="checkbox"
+              checked={selectedGenres.includes(genre)}
+              onChange={() => toggleGenre(genre)}
+            />
+            {t(genre)}
+          </label>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default GenreFilter;
