@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { fetchAnimeById } from '../services/animeApi';
 import "../assets/AnimeDetailPage.css";
 
-
 function AnimeDetailPage() {
   const { id } = useParams();
+  const { t, i18n } = useTranslation(); // добавляем i18n
   const [anime, setAnime] = useState(null);
 
   useEffect(() => {
-    fetchAnimeById(id).then(data => {
-      console.log("Полученные данные аниме:", data);
-      if (Array.isArray(data) && data.length > 0) {
-        setAnime(data[0]);
+    const loadAnime = async () => {
+      try {
+        const data = await fetchAnimeById(id, i18n.language); // передаём текущий язык
+        console.log("Полученные данные аниме:", data);
+        setAnime(data); // теперь сервер сразу отдаёт 1 аниме
+      } catch (error) {
+        console.error('Ошибка при загрузке аниме:', error);
       }
-    });
-  }, [id]);
+    };
+
+    loadAnime();
+  }, [id, i18n.language]); // следим за id и за сменой языка
 
   if (!anime) {
-    return <div>Загрузка...</div>;
+    return <div>{t('loading') || "Загрузка..."}</div>;
   }
 
   const getYouTubeVideoId = (url) => {
@@ -38,14 +44,15 @@ function AnimeDetailPage() {
           <img src={anime.image_url} alt={anime.title} />
         </div>
         <div className="anime-detail-info">
-          <p><strong>Описание:</strong> {anime.description}</p>
-          <p><strong>Год выпуска:</strong> {anime.year}</p>
-          <p><strong>Жанры:</strong> {Array.isArray(anime.genres) ? anime.genres.join(", ") : anime.genres || "Не указаны"}</p>
+          <p><strong>{t('description') || "Описание"}:</strong> {anime.description}</p>
+          <p><strong>{t('year') || "Год выпуска"}:</strong> {anime.year}</p>
+          <p><strong>{t('genres') || "Жанры"}:</strong> {Array.isArray(anime.genres) ? anime.genres.join(", ") : anime.genres || t('notSpecified') || "Не указаны"}</p>
 
-          {/* Убедись, что у тебя есть ссылка anime.url в данных */}
           {anime.url && (
             <p>
-              <a href={anime.url} target="_blank" rel="noopener noreferrer">Смотреть аниме</a>
+              <a href={anime.url} target="_blank" rel="noopener noreferrer">
+                {t('watchAnime') || "Смотреть аниме"}
+              </a>
             </p>
           )}
 

@@ -12,41 +12,44 @@ function LanguageSwitcher() {
 
   return (
     <div style={{ display: "flex", gap: "10px", alignItems: "center", padding: "10px" }}>
-      <button
-        onClick={() => changeLanguage('ru')}
-        style={{
-          ...buttonStyle,
-          ...(currentLang === 'ru' ? activeButtonStyle : {})
-        }}
-      >
-        🇷🇺
-      </button>
-      <button
-        onClick={() => changeLanguage('en')}
-        style={{
-          ...buttonStyle,
-          ...(currentLang === 'en' ? activeButtonStyle : {})
-        }}
-      >
-        🇬🇧
-      </button>
+      <LanguageButton 
+        lang="ru" 
+        currentLang={currentLang} 
+        onClick={() => changeLanguage('ru')} 
+        emoji="🇷🇺" 
+      />
+      <LanguageButton 
+        lang="en" 
+        currentLang={currentLang} 
+        onClick={() => changeLanguage('en')} 
+        emoji="🇬🇧" 
+      />
     </div>
   );
 }
 
-const buttonStyle = {
-  background: "none",
-  border: "2px solid transparent",
-  cursor: "pointer",
-  fontSize: "28px",
-  color: "#fefae0",
-  padding: "5px",
-  transition: "all 0.3s ease", // Мягкая анимация при наведении
-};
+function LanguageButton({ lang, currentLang, onClick, emoji }) {
+  const isActive = lang === currentLang;
 
-const activeButtonStyle = {
-  borderColor: "white", // Подсветим выбранный язык рамочкой
-  borderRadius: "8px",
-};
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        background: "none",
+        borderWidth: "2px",
+        borderStyle: "solid",
+        borderColor: isActive ? "white" : "transparent",
+        borderRadius: "8px",
+        cursor: "pointer",
+        fontSize: "28px",
+        color: "white",
+        padding: "5px",
+        transition: "all 0.3s ease",
+      }}
+    >
+      {emoji}
+    </button>
+  );
+}
 
 export default LanguageSwitcher;
