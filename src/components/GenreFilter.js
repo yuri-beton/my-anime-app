@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
 import "../assets/GenreFilter.css";
 
@@ -15,48 +14,9 @@ const GenreFilter = ({ selectedGenres, setSelectedGenres }) => {
   ];
 
   useEffect(() => {
-    axios
-      .get("https://n8n.sagutor.ru/webhook/anime/filter")
-      .then((response) => {
-        console.log("FULL API RESPONSE:", response);
-        const data = response.data;
-        if (Array.isArray(data)) {
-          // Преобразуем серверные жанры к ключам, если понадобится
-          setGenres(data.map(genre => mapGenreToKey(genre)));
-        } else {
-          console.warn("API не вернул массив, используем локальный список.");
-          setGenres(localGenreList);
-        }
-      })
-      .catch((error) => {
-        console.error(t('genresLoadError'), error);
-        setGenres(localGenreList);
-      });
+    // Здесь мы просто устанавливаем локальный список
+    setGenres(localGenreList);
   }, []);
-
-  const mapGenreToKey = (genreName) => {
-    // Функция для маппинга жанров если API присылает русские названия
-    const mapping = {
-      "Экшен": "action",
-      "Приключения": "adventure",
-      "Комедия": "comedy",
-      "Драма": "drama",
-      "Фэнтези": "fantasy",
-      "Повседневность": "sliceOfLife",
-      "Ужасы": "horror",
-      "Мистика": "mystery",
-      "Психологическое": "psychological",
-      "Романтика": "romance",
-      "Научная фантастика": "sciFi",
-      "Сверхъестественное": "supernatural",
-      "Триллер": "thriller",
-      "Спорт": "sports",
-      "Меха": "mecha",
-      "Исекай": "isekai",
-      "Исторический": "historical"
-    };
-    return mapping[genreName] || genreName;
-  };
 
   const toggleGenre = (genre) => {
     setSelectedGenres((prevGenres) =>

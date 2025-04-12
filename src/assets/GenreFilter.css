@@ -1,13 +1,13 @@
 .genre-filter {
-    width: 250px; 
-    background: #dad7cd; 
+    width: 250px;
+    flex-shrink: 0;
+    background-color: #dad7cd; /* Нежный цвет фильтра */
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #a3b18a;
-    position: fixed; /* Фиксируем фильтр */
-    left: 20px; /* Отодвигаем влево */
-    top: 100px; /* Смещаем ниже */
     height: auto;
+    position: sticky;
+    top: 100px; /* Если хочешь фиксировать жанры при прокрутке */
   }
 /* Заголовок */
 .genre-filter h3 {

@@ -5,6 +5,7 @@
     padding: 40px 20px;
   }
   
+  
   .genre-filter {
     width: 250px;
     flex-shrink: 0;
@@ -13,7 +14,7 @@
   .anime-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
   }
   
