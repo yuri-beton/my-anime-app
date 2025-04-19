@@ -48,5 +48,18 @@
   "sports": "Спорт",
   "mecha": "Меха",
   "isekai": "Исекай",
-  "historical": "Исторический"
+  "historical": "Исторический",
+  "animeLoadError": "Ошибка при загрузке аниме",
+  "episodeLoadError": "Ошибка при получении серии",
+  "videoResponse": "Ответ с видео",
+  "trailer": "Трейлер",
+  "seasons": "Сезоны",
+  "episode": "Серия",
+  "loading": "Загрузка...",
+  "description": "Описание",
+  "year": "Год выпуска",
+  "genres": "Жанры",
+  "notSpecified": "Не указаны",
+  "applyFilter": "Применить фильтр"
+
 }

@@ -46,3 +46,19 @@
     height: 16px;
     cursor: pointer;
 }
+
+.apply-filter-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #588157;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .apply-filter-button:hover {
+    background-color: #3a5a40;
+  }

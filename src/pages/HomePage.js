@@ -3,81 +3,75 @@ import { useTranslation } from 'react-i18next';
 import { fetchAnimeList } from '../services/animeApi';
 import AnimeCard from '../components/AnimeCard';
 import axios from 'axios';
-import '../assets/GenreFilter.css';
-import '../assets/anime-grid.css';
 import GenreFilter from '../components/GenreFilter';
+import '../assets/anime-grid.css';
+import '../assets/GenreFilter.css';
 
 const HomePage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [animeList, setAnimeList] = useState([]);
-  const [filteredAnime, setFilteredAnime] = useState([]);
+  const [filteredAnime, setFilteredAnime] = useState(null); // ❗ null = ещё не применён фильтр
   const [selectedGenres, setSelectedGenres] = useState([]);
-  
+
+  // Загрузка всех аниме при старте или смене языка
   useEffect(() => {
     const loadAnimeList = async () => {
-      try {
-        const data = await fetchAnimeList();
-        setAnimeList(data);
-      } catch (error) {
-        console.error("Ошибка при загрузке всех аниме:", error);
-      }
+      const data = await fetchAnimeList(i18n.language);
+      setAnimeList(data);
     };
-  
     loadAnimeList();
-  }, []);
-  
-  // Потом фильтруем, если выбраны жанры
-  useEffect(() => {
-    const fetchFilteredAnime = async () => {
-      if (selectedGenres.length === 0) {
-        setFilteredAnime([]);
-        return;
-      }
-  
-      try {
-        const mappedGenres = selectedGenres.map(g => {
-          const mapping = {
-            action: "Экшен",
-            adventure: "Приключения",
-            comedy: "Комедия",
-            drama: "Драма",
-            fantasy: "Фэнтези",
-            sliceOfLife: "Повседневность",
-            horror: "Ужасы",
-            mystery: "Мистика",
-            psychological: "Психологическое",
-            romance: "Романтика",
-            sciFi: "Научная фантастика",
-            supernatural: "Сверхъестественное",
-            thriller: "Триллер",
-            sports: "Спорт",
-            mecha: "Меха",
-            isekai: "Исекай",
-            historical: "Исторический"
-          };
-          return mapping[g] || g;
-        });
-  
-        const genreParams = mappedGenres.map(g => `genres=${encodeURIComponent(g)}`).join("&");
-  
-        const response = await axios.get(`https://n8n.sagutor.ru/webhook/anime/filter?${genreParams}`);
-  
-        if (Array.isArray(response.data)) {
-          setFilteredAnime(response.data);
-        } else {
-          console.warn("⚠️ Сервер вернул не массив:", response.data);
-          setFilteredAnime([]);
-        }
-      } catch (error) {
-        console.error(t('filterError'), error);
-        setFilteredAnime([]);
-      }
-    };
-  
-    fetchFilteredAnime();
-  }, [selectedGenres, t]);
+  }, [i18n.language]);
 
-  const currentAnimeList = selectedGenres.length > 0 ? filteredAnime : animeList;
+  // 🔘 Обработка кнопки "Применить фильтр"
+  const handleApplyFilter = async () => {
+    if (selectedGenres.length === 0) {
+      setFilteredAnime(null); // ❗ Показываем весь список
+      return;
+    }
+
+    const genreMapping = {
+      action: "Экшен",
+      adventure: "Приключения",
+      comedy: "Комедия",
+      drama: "Драма",
+      fantasy: "Фэнтези",
+      sliceOfLife: "Повседневность",
+      horror: "Ужасы",
+      mystery: "Мистика",
+      psychological: "Психологическое",
+      romance: "Романтика",
+      sciFi: "Научная фантастика",
+      supernatural: "Сверхъестественное",
+      thriller: "Триллер",
+      sports: "Спорт",
+      mecha: "Меха",
+      isekai: "Исекай",
+      historical: "Исторический"
+    };
+
+    const mappedGenres = selectedGenres.map(g => genreMapping[g] || g);
+
+    try {
+      const response = await axios.get(
+        `https://n8n.sagutor.ru/webhook/anime/filter`,
+        {
+          params: { genres: mappedGenres }
+        }
+      );
+
+      if (Array.isArray(response.data)) {
+        setFilteredAnime(response.data);
+      } else {
+        console.warn("Сервер вернул не массив:", response.data);
+        setFilteredAnime([]);
+      }
+    } catch (error) {
+      console.error(t('filterError'), error);
+      setFilteredAnime([]);
+    }
+  };
+
+  const currentAnimeList = filteredAnime ?? animeList;
 
   return (
     <div className="home-page">
@@ -86,14 +80,15 @@ const HomePage = () => {
         <GenreFilter
           selectedGenres={selectedGenres}
           setSelectedGenres={setSelectedGenres}
+          onApplyFilter={handleApplyFilter}
         />
         <div className="anime-grid">
-          {Array.isArray(currentAnimeList) && currentAnimeList.length > 0 ? (
+          {currentAnimeList.length > 0 ? (
             currentAnimeList.map((anime) => (
               <AnimeCard key={anime.id} anime={anime} />
             ))
           ) : (
-            <div className="no-results">{t('noResults') || "Аниме по выбранным жанрам не найдено."}</div>
+            <div className="no-results">{t('noResults') || "Аниме не найдено"}</div>
           )}
         </div>
       </div>

@@ -1,72 +1,55 @@
-.admin-page {
-    padding: 30px;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #f5f5f5;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.anime-list {
+    margin-top: 40px;
   }
   
-  .admin-title {
+  .anime-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .anime-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .anime-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .anime-info {
+    margin-top: 10px;
     text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 20px;
+  }
+  
+  .anime-info h4 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
     color: #344e41;
   }
   
-  .admin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .admin-form input,
-  .admin-form textarea {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-  
-  .admin-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .admin-buttons button {
-    flex: 1;
-    padding: 10px 15px;
+  .anime-info button {
+    margin: 5px;
+    padding: 5px 10px;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: white;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
   }
   
-  .add-button {
+  .anime-info button:first-child {
     background-color: #588157;
+    color: white;
   }
   
-  .add-button:hover {
-    background-color: #3a5a40;
-  }
-  
-  .update-button {
-    background-color: #6c757d;
-  }
-  
-  .update-button:hover {
-    background-color: #495057;
-  }
-  
-  .delete-button {
+  .anime-info button:last-child {
     background-color: #bc4749;
-  }
-  
-  .delete-button:hover {
-    background-color: #9b2226;
+    color: white;
   }
   

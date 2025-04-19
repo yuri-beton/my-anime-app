@@ -49,5 +49,17 @@
     "sports": "Sports",
     "mecha": "Mecha",
     "isekai": "Isekai",
-    "historical": "Historical"
+    "historical": "Historical",
+    "animeLoadError": "Error loading anime",
+  "episodeLoadError": "Error fetching episode",
+  "videoResponse": "Video response",
+  "trailer": "Trailer",
+  "seasons": "Seasons",
+  "episode": "Episode",
+  "loading": "Loading...",
+  "description": "Description",
+  "year": "Release Year",
+  "genres": "Genres",
+  "notSpecified": "Not specified",
+   "applyFilter": "Apply Filter"
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import { fetchAnimeById } from '../services/animeApi';
 import "../assets/AnimeDetailPage.css";
 
@@ -8,28 +9,26 @@ function AnimeDetailPage() {
   const { id } = useParams();
   const { t, i18n } = useTranslation();
   const [anime, setAnime] = useState(null);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [showTrailer, setShowTrailer] = useState(true);
 
   useEffect(() => {
     const loadAnime = async () => {
       try {
         const data = await fetchAnimeById(id, i18n.language);
-        console.log("Полученные данные аниме:", data);
         if (Array.isArray(data) && data.length > 0) {
           setAnime(data[0]);
         } else {
-          setAnime(data); // если сразу объект
+          setAnime(data);
         }
       } catch (error) {
-        console.error('Ошибка при загрузке аниме:', error);
+        console.error(t('animeLoadError') || 'Ошибка при загрузке аниме:', error);
       }
     };
 
     loadAnime();
   }, [id, i18n.language]);
-
-  if (!anime) {
-    return <div>{t('loading') || "Загрузка..."}</div>;
-  }
 
   const getYouTubeVideoId = (url) => {
     if (!url) return null;
@@ -38,7 +37,28 @@ function AnimeDetailPage() {
     return match ? match[1] : null;
   };
 
-  const videoId = getYouTubeVideoId(anime.youtube_url);
+  const videoId = getYouTubeVideoId(anime?.youtube_url);
+
+  const loadEpisode = async () => {
+    try {
+      const response = await axios.get('https://n8n.sagutor.ru/webhook/anime/video', {
+        params: { id, episode: selectedEpisode }
+      });
+      console.log(t('videoResponse') + ":", response.data);
+      setVideoUrl(response.data?.Ссылка || "");
+      setShowTrailer(false);
+    } catch (error) {
+      console.error(t('episodeLoadError') || "Ошибка при получении серии:", error);
+    }
+  };
+
+  const handleEpisodeChange = (e) => {
+    setSelectedEpisode(Number(e.target.value));
+  };
+
+  if (!anime) {
+    return <div>{t('loading') || "Загрузка..."}</div>;
+  }
 
   return (
     <div className="anime-detail-page">
@@ -52,21 +72,37 @@ function AnimeDetailPage() {
           <p><strong>{t('year') || "Год выпуска"}:</strong> {anime.year}</p>
           <p><strong>{t('genres') || "Жанры"}:</strong> {Array.isArray(anime.genres) ? anime.genres.join(", ") : anime.genres || (t('notSpecified') || "Не указаны")}</p>
 
-          {anime.url && (
-            <p>
-              <a href={anime.url} target="_blank" rel="noopener noreferrer">
-                {t('watchAnime') || "Смотреть аниме"}
-              </a>
-            </p>
-          )}
+          <div className="buttons">
+            <button onClick={() => setShowTrailer(true)}>{t('trailer') || "Трейлер"}</button>
+            <button onClick={loadEpisode}>{t('seasons') || "Сезоны"}</button>
+            <select value={selectedEpisode} onChange={handleEpisodeChange} style={{ marginLeft: '10px' }}>
+              {[...Array(12)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>{t('episode') || 'Серия'} {i + 1}</option>
+              ))}
+            </select>
+          </div>
 
-          {videoId && (
+          {showTrailer && videoId && (
             <div className="anime-video">
               <iframe
                 width="560"
                 height="315"
                 src={`https://www.youtube.com/embed/${videoId}`}
                 title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
+
+          {!showTrailer && videoUrl && (
+            <div className="anime-video">
+              <iframe
+                width="560"
+                height="315"
+                src={videoUrl}
+                title="Episode Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

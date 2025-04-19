@@ -2,21 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "../assets/GenreFilter.css";
 
-const GenreFilter = ({ selectedGenres, setSelectedGenres }) => {
+const localGenreList = [
+  "action", "adventure", "comedy", "drama", "fantasy", "sliceOfLife",
+  "horror", "mystery", "psychological", "romance", "sciFi",
+  "supernatural", "thriller", "sports", "mecha", "isekai", "historical"
+];
+
+const GenreFilter = ({ selectedGenres, setSelectedGenres, onApplyFilter }) => {
   const { t } = useTranslation();
-  const [genres, setGenres] = useState([]);
-
-  // Локальный список жанров
-  const localGenreList = [
-    "action", "adventure", "comedy", "drama", "fantasy", "sliceOfLife",
-    "horror", "mystery", "psychological", "romance", "sciFi",
-    "supernatural", "thriller", "sports", "mecha", "isekai", "historical"
-  ];
-
-  useEffect(() => {
-    // Здесь мы просто устанавливаем локальный список
-    setGenres(localGenreList);
-  }, []);
+  const [genres] = useState(localGenreList);
 
   const toggleGenre = (genre) => {
     setSelectedGenres((prevGenres) =>
@@ -41,6 +35,10 @@ const GenreFilter = ({ selectedGenres, setSelectedGenres }) => {
           </label>
         ))}
       </div>
+
+      <button className="apply-filter-button" onClick={onApplyFilter}>
+        {t('applyFilter') || "Применить фильтр"}
+      </button>
     </div>
   );
 };
