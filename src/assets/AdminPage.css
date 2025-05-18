@@ -1,55 +1,140 @@
+.admin-page {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f0f4ef;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-title {
+  text-align: center;
+  color: #344e41;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.admin-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  flex: 1 1 300px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #a3b18a;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.admin-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.add-button,
+.update-button,
+.delete-button,
+.episode-button { /* Добавил новую кнопку для серий */
+  background-color: #588157;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #4a774f;
+}
+
+.update-button:hover {
+  background-color: #3a5a40;
+}
+
+.delete-button {
+  background-color: #bc4749;
+}
+
+.delete-button:hover {
+  background-color: #9b3638;
+}
+
+/* Новая кнопка для серий */
+.episode-button {
+  background-color: #3a5a40;
+}
+
+.episode-button:hover {
+  background-color: #2d4731;
+}
+
 .anime-list {
-    margin-top: 40px;
-  }
-  
-  .anime-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  .anime-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .anime-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  .anime-info {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .anime-info h4 {
-    margin-bottom: 5px;
-    font-size: 1.2rem;
-    color: #344e41;
-  }
-  
-  .anime-info button {
-    margin: 5px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .anime-info button:first-child {
-    background-color: #588157;
-    color: white;
-  }
-  
-  .anime-info button:last-child {
-    background-color: #bc4749;
-    color: white;
-  }
-  
+  margin-top: 30px;
+}
+
+.anime-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.anime-card {
+  background: white;
+  border: 1px solid #a3b18a;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 220px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.anime-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.anime-info {
+  padding: 10px;
+}
+
+.anime-info h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.anime-info p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #344e41;
+}
+
+.anime-info button {
+  background-color: #588157;
+  color: white;
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.anime-info button:hover {
+  background-color: #3a5a40;
+}

@@ -12,6 +12,7 @@ function AnimeDetailPage() {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [videoUrl, setVideoUrl] = useState("");
   const [showTrailer, setShowTrailer] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const loadAnime = async () => {
@@ -39,21 +40,30 @@ function AnimeDetailPage() {
 
   const videoId = getYouTubeVideoId(anime?.youtube_url);
 
-  const loadEpisode = async () => {
+  const openSeasonModal = async () => {
     try {
       const response = await axios.get('https://n8n.sagutor.ru/webhook/anime/video', {
         params: { id, episode: selectedEpisode }
       });
-      console.log(t('videoResponse') + ":", response.data);
       setVideoUrl(response.data?.Ссылка || "");
       setShowTrailer(false);
+      setShowModal(true);
     } catch (error) {
       console.error(t('episodeLoadError') || "Ошибка при получении серии:", error);
     }
   };
 
-  const handleEpisodeChange = (e) => {
-    setSelectedEpisode(Number(e.target.value));
+  const handleEpisodeChangeInModal = async (e) => {
+    const episodeNumber = Number(e.target.value);
+    setSelectedEpisode(episodeNumber);
+    try {
+      const response = await axios.get('https://n8n.sagutor.ru/webhook/anime/video', {
+        params: { id, episode: episodeNumber }
+      });
+      setVideoUrl(response.data?.Ссылка || "");
+    } catch (error) {
+      console.error(t('episodeLoadError') || "Ошибка при смене серии:", error);
+    }
   };
 
   if (!anime) {
@@ -74,12 +84,7 @@ function AnimeDetailPage() {
 
           <div className="buttons">
             <button onClick={() => setShowTrailer(true)}>{t('trailer') || "Трейлер"}</button>
-            <button onClick={loadEpisode}>{t('seasons') || "Сезоны"}</button>
-            <select value={selectedEpisode} onChange={handleEpisodeChange} style={{ marginLeft: '10px' }}>
-              {[...Array(12)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>{t('episode') || 'Серия'} {i + 1}</option>
-              ))}
-            </select>
+            <button onClick={openSeasonModal}>{t('seasons') || "Сезоны"}</button>
           </div>
 
           {showTrailer && videoId && (
@@ -95,22 +100,42 @@ function AnimeDetailPage() {
               ></iframe>
             </div>
           )}
+        </div>
+      </div>
 
-          {!showTrailer && videoUrl && (
-            <div className="anime-video">
+      {/* МОДАЛКА */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>{t('chooseEpisode') || "Выберите серию"}</h3>
+            <select
+              value={selectedEpisode}
+              onChange={handleEpisodeChangeInModal}
+              style={{ marginBottom: '15px', padding: '8px', width: '100%' }}
+            >
+              {[...Array(12)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {t('episode') || 'Серия'} {i + 1}
+                </option>
+              ))}
+            </select>
+
+            {videoUrl && (
               <iframe
-                width="560"
-                height="315"
+                width="100%"
+                height="400"
                 src={videoUrl}
                 title="Episode Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-            </div>
-          )}
+            )}
+
+            <button className="close-button" onClick={() => setShowModal(false)}>✕</button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
